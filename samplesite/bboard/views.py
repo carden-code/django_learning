@@ -14,6 +14,6 @@ def index(request):
     # # Контекст шаблона должен представлять собой обычный словарь Python, элементы которого преобразуются в доступные
     # # внутри шаблона переменные, одноименные ключам этих элементов.
     # context = {'bbs': bbs}
-    bbs = Bb.objects.order_by('-published')
+    bbs = Bb.objects.all
     return render(request, 'bboard/index.html', {'bbs': bbs})
 
