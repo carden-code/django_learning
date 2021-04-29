@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Bb
+from .models import Rubric
 
 
 class BbAdmin(admin.ModelAdmin):
@@ -8,7 +9,7 @@ class BbAdmin(admin.ModelAdmin):
         django.contrib.admin. Он содержит набор атрибутов класса,
         которые задают параметры представления модели. """
     # list_display - последовательность имен полей, которые должны выводиться в списке записей;
-    list_display = ('title', 'content', 'price', 'published')
+    list_display = ('title', 'content', 'price', 'rubric', 'published')
 
     # list_display_links - последовательность имен полей, которые должны быть преобразованы в гиперссылки,
     # ведущие на страницу правки записи;
@@ -19,4 +20,5 @@ class BbAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Bb, BbAdmin)
+admin.site.register(Rubric)
 
