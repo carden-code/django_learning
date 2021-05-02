@@ -18,7 +18,4 @@ def by_rubric(request, rubric_id):
     rubrics = Rubric.objects.all()
     current_rubric = Rubric.objects.get(pk=rubric_id)
     context = {'bbs': bbs, 'rubrics': rubrics, 'current_rubric': current_rubric}
-    return render(request, 'bbord/by_rubric.html', context)
-
-
-
+    return render(request, 'bboard/by_rubric.html', context)
