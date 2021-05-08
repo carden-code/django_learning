@@ -10,6 +10,9 @@ class Bb(models.Model):
     # Определяем связь с моделью Рубрика(У одной рубрики может быть много Объявлений).
     rubric = models.ForeignKey('Rubric', null=True, on_delete=models.PROTECT, verbose_name='Рубрика')
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name_plural = 'Объявления'
         verbose_name = 'Объявление'
