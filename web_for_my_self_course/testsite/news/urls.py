@@ -1,7 +1,6 @@
 from django.urls import path
-from news.views import index, test
+from news.views import index
 
 urlpatterns = [
     path('', index),
-    path('test', test)
 ]
