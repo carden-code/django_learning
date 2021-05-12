@@ -1,75 +1,46 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+{% extends 'base.html' %}
 
-    <title>{{ title }}</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home'%}">Новости со всего мира</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url "home" %}">Главная</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Добавить новость</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<div class="container">
-    <h1>{{ title }}</h1>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="list-group">
-                {% for item_category in categories %}
-                    <a href="{% url 'category' item_category.pk %}" class="list-group-item
-                    list-group-item-action"
-                    >{{ item_category.title }}</a>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="col-md-9">
-            {% for item_news in news %}
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Категория: <a href="{% url 'category' item_news.category.pk %}">{{ item_news.category }}</a>
-
-                    </div>
-                    <div class="card-body ">
-                        <div class="media row">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {% if item_news.photo %}
-                                        <img src="{{ item_news.photo.url }}" alt="" width="350" height="200"
-                                             class="mr-3">
-                                    {% else %}
-                                        <img src="https://picsum.photos/id/1060/350/200/?blur=2" alt="" class="mr-3">
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <h5 class="card-title">{{ item_news.title }}</h5>
-                                    <p class="card-text">{{ item_news.content|linebreaks|truncatewords:50 }}</p>
-                                    <a href="#" class="btn btn-primary">Read more...</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-muted">
-                        {{ item_news.created_at|date:"d-m-Y H:i:s" }}
-                    </div>
-                </div>
+{% block sidebar %}
+    <div class="col-md-3">
+        <div class="list-group">
+            {% for item_category in categories %}
+                <a href="{% url 'category' item_category.pk %}" class="list-group-item list-group-item-action"
+                >{{ item_category.title }}</a>
             {% endfor %}
         </div>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-9">
+        {% for item_news in news %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    Категория: <a href="{% url 'category' item_news.category.pk %}">{{ item_news.category }}</a>
+                </div>
+                <div class="card-body ">
+                    <div class="media row">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% if item_news.photo %}
+                                    <img src="{{ item_news.photo.url }}" alt="" width="350" height="200"
+                                         class="mr-3">
+                                {% else %}
+                                    <img src="https://picsum.photos/id/1060/350/200/?blur=2" alt="" class="mr-3">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <h5 class="card-title">{{ item_news.title }}</h5>
+                                <p class="card-text">{{ item_news.content|linebreaks|truncatewords:50 }}</p>
+                                <a href="#" class="btn btn-primary">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ item_news.created_at|date:"d-m-Y H:i:s" }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
