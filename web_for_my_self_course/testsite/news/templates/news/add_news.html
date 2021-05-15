@@ -12,9 +12,9 @@
     <h1>Добавление новости</h1>
     <form action="{% url 'add_news' %}" method="post">
         {% csrf_token %}
-        {% comment %}
+
         {{ form.as_p }}
-        {% endcomment %}
+
 
         {% comment %}
         {{ form.non_field_errors }}
@@ -48,6 +48,7 @@
         </div>
         {% endcomment %}
 
+        {% comment %}
         {% for field in form %}
             <div class="mb-3">
                 {{ field.label_tag }}
@@ -57,7 +58,7 @@
                 </div>
             </div>
         {% endfor %}
-
+        {% endcomment %}
         <button type="submit" class="btn btn-primary">Добавить новость</button>
     </form>
 {% endblock %}
