@@ -29,3 +29,6 @@ def view_news(request, news_id):
         'news_item': news_item,
     }
     return render(request, template_name='news/view_news.html', context=context)
+
+def add_news(request):
+    return render(request=request, template_name='news/add_news.html')
