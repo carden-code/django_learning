@@ -1,5 +1,7 @@
 from django import forms
 from .models import News
+import re
+from django.core.exceptions import ValidationError
 
 
 class NewsForm(forms.ModelForm):
@@ -13,3 +15,10 @@ class NewsForm(forms.ModelForm):
             'is_published': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'category': forms.Select(attrs={'class': 'form-select'})
         }
+
+    # Собственный валидатор поля title (Не должен содержать цыфры в начале строки.)
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if re.match(r'\d', title):
+            raise ValidationError('Название не должно начинаться с цифры.')
+        return title
