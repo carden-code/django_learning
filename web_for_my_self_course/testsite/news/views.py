@@ -10,6 +10,7 @@ class HomeNews(ListView):
     model = News
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
+    # queryset = News.objects.select_related('category')
 
     # Переопределяем для добавления контекста.
     def get_context_data(self, *, object_list=None, **kwargs):
