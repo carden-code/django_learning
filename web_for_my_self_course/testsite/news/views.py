@@ -2,20 +2,25 @@ from django.shortcuts import render
 
 from django.views.generic import ListView, DetailView, CreateView
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import News, Category
 from .forms import NewsForm
+from .utils import MyMixin
 
 
-class HomeNews(ListView):
+class HomeNews(MyMixin, ListView):
     model = News
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
+    mixin_prop = 'hello world'
     # queryset = News.objects.select_related('category')
 
     # Переопределяем для добавления контекста.
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Главная страница'
+        context['title'] = self.get_upper('Главная страница')
+        context['mixin_prop'] = self.get_prop()
         return context
 
     # Фильтрует вывод данных.
@@ -30,7 +35,7 @@ class HomeNews(ListView):
 #                }
 #     return render(request, template_name='news/index.html', context=context)
 
-class NewsByCategory(ListView):
+class NewsByCategory(MyMixin, ListView):
     model = News
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
@@ -41,7 +46,7 @@ class NewsByCategory(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = Category.objects.get(pk=self.kwargs['category_id'])
+        context['title'] = self.get_upper(Category.objects.get(pk=self.kwargs['category_id']))
         return context
 
 
@@ -81,7 +86,9 @@ class ViewNews(DetailView):
 #     else:
 #         form = NewsForm()
 #     return render(request, template_name='news/add_news.html', context={'form': form})
-class CreateNews(CreateView):
+class CreateNews(LoginRequiredMixin, CreateView):
     form_class = NewsForm
     template_name = 'news/add_news.html'
     # success_url = reverse_lazy('home')
+    # login_url = '/admin/'
+    raise_exception = True
