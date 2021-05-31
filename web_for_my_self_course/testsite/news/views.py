@@ -15,6 +15,7 @@ class HomeNews(MyMixin, ListView):
     context_object_name = 'news'
     mixin_prop = 'hello world'
     # queryset = News.objects.select_related('category')
+    paginate_by = 2
 
     # Переопределяем для добавления контекста.
     def get_context_data(self, *, object_list=None, **kwargs):
