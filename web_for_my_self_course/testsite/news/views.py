@@ -7,6 +7,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import News, Category
 from .forms import NewsForm
 from .utils import MyMixin
+from django.contrib.auth.forms import UserCreationForm
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserCreationForm()
+    return render(request, 'news/register.html', {'form': form})
+
+
+def login(request):
+    return render(request, 'news/login.html')
 
 
 class HomeNews(MyMixin, ListView):
@@ -15,7 +30,7 @@ class HomeNews(MyMixin, ListView):
     context_object_name = 'news'
     mixin_prop = 'hello world'
     # queryset = News.objects.select_related('category')
-    paginate_by = 10
+    paginate_by = 2
 
     # Переопределяем для добавления контекста.
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -41,6 +56,7 @@ class NewsByCategory(MyMixin, ListView):
     template_name = 'news/home_news_list.html'
     context_object_name = 'news'
     allow_empty = False  # Запрещает показ пустых списков.
+    paginate_by = 2
 
     def get_queryset(self):
         return News.objects.filter(category_id=self.kwargs['category_id'], is_published=True).select_related('category')
