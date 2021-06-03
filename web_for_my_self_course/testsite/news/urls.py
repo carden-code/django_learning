@@ -3,7 +3,7 @@ from news.views import *
 
 urlpatterns = [
     path('register/', register, name='register'),
-    path('login/', login, name='login'),
+    path('login/', user_login, name='login'),
 
     path('', HomeNews.as_view(), name='home'),
     # path('', index, name='home'),
