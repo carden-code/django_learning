@@ -17,7 +17,7 @@ def test(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], 'yourtestsapp@gmail.com',
-                      ['carden.ruby@gmail.com'], fail_silently=False)
+                      ['carden.ruby@gmail.com'], fail_silently=True)
             if mail:
                 messages.success(request, 'Письмо отправлено')
                 return redirect('test')
