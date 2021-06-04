@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
+    'ckeditor_uploader',
     'news.apps.NewsConfig',
     'debug_toolbar',
 ]
@@ -137,3 +139,5 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'yourtestsapp@gmail.com'
 EMAIL_HOST_PASSWORD = PASSWORD_EMAIL
 EMAIL_USE_SSL = True
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
