@@ -10,7 +10,9 @@ urlpatterns = [
     path('admin/', admin, name='admin'),
     path('contact/', contact, name='contact'),
 
-    path('', cache_page(60)(HomeNews.as_view()), name='home'),
+    # path('', cache_page(60)(HomeNews.as_view()), name='home'),
+    path('', HomeNews.as_view(), name='home'),
+
     # path('', index, name='home'),
     path('category/<int:category_id>/', NewsByCategory.as_view(), name='category'),
     # path('category/<int:category_id>/', get_category, name='category'),
