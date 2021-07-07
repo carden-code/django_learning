@@ -19,6 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     form = PostAdminForm
+    save_as = True
 
 
 class TagAdmin(admin.ModelAdmin):
